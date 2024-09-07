@@ -1,3 +1,47 @@
+const choicesDiv = document.createElement("div");
+choicesDiv.style.display = "flex";
+choicesDiv.style.justifyContent = "center";
+choicesDiv.style.alignItems = "center";
+document.body.appendChild(choicesDiv);
+
+const rock = document.createElement("button");
+rock.textContent = "Rock";
+rock.className = "choice";
+rock.id = "rock";
+choicesDiv.appendChild(rock);
+
+const paper = document.createElement("button");
+paper.textContent = "Paper";
+paper.className = "choice";
+paper.id = "paper";
+choicesDiv.appendChild(paper);
+
+const scissors = document.createElement("button");
+scissors.textContent = "Scissors";
+scissors.className ="choice";
+scissors.id = "scissors";
+choicesDiv.appendChild(scissors);
+
+const results = document.createElement("div");
+results.className = "results";
+document.body.appendChild(results);
+results.style.display = "flex";
+results.style.flexDirection = "column";
+results.style.justifyContent = "center";
+results.style.alignItems = "center";
+
+const resultsText = document.createElement("p");
+resultsText.textContent = "Results";
+resultsText.className = "resultsText";
+results.appendChild(resultsText);
+
+const restart = document.createElement("button");
+restart.textContent = "Restart";
+restart.className = "restart";
+results.appendChild(restart);
+
+let gameActive = false;
+
 function getComputerChoice () {
 	// Write the code so that getComputerChoice will randomly return one of the 
 	// following string values: “rock”, “paper” or “scissors”.
@@ -13,39 +57,9 @@ function getComputerChoice () {
 	}
 }
 
-
-//Create a new function named getHumanChoice.
-//Write the code so that getHumanChoice will return one of the valid choices depending on what the user inputs.
-//Hint: Use the prompt method to get the user’s input.
-//Test what your function returns by using console.log.
-
-function getHumanChoice () {
-
-	let userChoice = prompt("Choose rock, paper, or scissors to make a move:").toLowerCase().trim();
-	if (userChoice == 'rock') {
-		return 'rock';
-	} else if (userChoice == 'paper') {
-		return 'paper';
-	} else if (userChoice == 'scissors') {
-		return 'scissors';
-	} else { // invalid
-		console.log("Invalid input");
-		return;
-	}
-}
-
-// Create a new function named playGame.
-// Move your playRound function and score variables so that they’re declared inside of the new playGame function
-// Play 5 rounds by calling playRound 5 times.
-// Hint: When you assign a function call to a variable, the return value of that function is assigned to the variable. Accessing the variable afterward will only provide the assigned value; it doesn’t recall the function. You need to recall the choice functions to get new choices for each round.
-// Re-work your previous functions or create more helper functions if necessary. Specifically, you may want to change the return values to something more useful.
-// If you already know about loops, you can use them. If not, don’t worry! Loops will be covered in the next lesson.
-
-function playGame() {
-	let humanScore = 0;
-	let computerScore = 0;
-
-	function playRound (humanChoice, computerChoice) {
+let humanScore = 0;
+let computerScore = 0;
+function playRound (humanChoice, computerChoice) {
 		//	Write the code for your playRound function to console.log a string value representing the round winner, 
 		//	such as: “You lose! Paper beats Rock”.
 		//	Increment the humanScore or computerScore variable based on the round winner.
@@ -55,67 +69,101 @@ function playGame() {
 			//  paper beats rock, rock beats scissors, scissors beat paper
 		
 			// Make clauses for both sides
+
 			console.log(`Your Choice: ${humanChoice}\nComputer Choice: ${computerChoice}`);
 			// Computer Choice Clauses
 			if (computerChoice == 'rock') {
 		
 				if (humanChoice == 'rock') {
-					console.log("Draw! Each competitor chose rock.");
+					resultsText.textContent = ("Results: Draw! Each competitor chose rock.");
 				} else if (humanChoice == 'paper') {		
 					++humanScore;
-					console.log(`You win! Paper beats rock.\nScore is now ${computerScore} to ${humanScore} (you)`);
+					results.textContent = (`Results: You win! Paper beats rock.\nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else if (humanChoice == 'scissors') {
 					++computerScore;
-					console.log(`The computer wins! Rock beats scissors.\nScore is now ${computerScore} to ${humanScore} (you)`);
+					resultsText.textContent = (`Results: The computer wins! Rock beats scissors.\nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else { // void return from invalid input
-					console.log("Invalid input from user. Try again.");
+					resultsText.textContent = ("Results: Invalid input from user. Try again.");
 				}
 		
 			} else if (computerChoice == 'paper') {
 		
 				if (humanChoice == 'rock') {
 					++computerScore; 
-					console.log(`The computer wins! Paper beats rock.\nScore is now ${computerScore} to ${humanScore} (you)`);
+					resultsText.textContent = (`Results: The computer wins! Paper beats rock.\nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else if (humanChoice == 'paper') {	
-					console.log("Draw! Each competitor chose paper.");
+					resultsText.textContent = ("Results: Draw! Each competitor chose paper.");
 				} else if (humanChoice == 'scissors') {
 					++humanScore;
-					console.log(`You win! Scissors beats paper.\nScore is now ${computerScore} to ${humanScore} (you)`);
+					resultsText.textContent = (`Results: You win! Scissors beats paper.\nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else { // void return from invalid input
-					console.log("Invalid input from user. Try again.");
+					resultsText.textContent = ("Results: Invalid input from user. Try again.");
 				}
 		
 			} else { // computer chose scissors
 		
 				if (humanChoice == 'rock') {
 					++humanScore;
-					console.log(`You win! Rock beats scissors. \nScore is now ${computerScore} to ${humanScore} (you)`);
+					resultsText.textContent = (`Results: You win! Rock beats scissors. \nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else if (humanChoice == 'paper') {
 					++computerScore;
-					console.log(`The computer wins! Scissors beats paper.\nScore is now ${computerScore} to ${humanScore} (you)`);
+					resultsText.textContent = (`Results: The computer wins! Scissors beats paper.\nScore is now ${computerScore} to ${humanScore} (you)`);
 				} else if (humanChoice == 'scissors') {
-					console.log("Draw! Each competitor chose paper.");
+					resultsText.textContent = ("Results: Draw! Each competitor chose paper.");
 				} else { // void return from invalid input
-					console.log("Invalid input from user. Try again.");
+					resultsText.textContent = ("Results: Invalid input from user. Try again.");
 				}
 		
 			}
-	}
 
-	for (let i=0; i<5; ++i) {
-		let humanMove = getHumanChoice();
-		let computerMove = getComputerChoice();
-		playRound(humanMove, computerMove);
-	}	
-
-	if (humanScore > computerScore) {
-		console.log(`You win by a score of ${humanScore} to ${computerScore}!`);
-	} else if (humanScore < computerScore) {
-		console.log(`Computer wins by a score of ${computerScore} to ${humanScore}!`);
-	} else {
-		console.log(`Draw! Final score: Computer - ${computerScore} , Player - ${humanScore}`);
-	}
-	return 1;
+			console.log(`Human Score: ${humanScore}\n`);
+			console.log(`CPU Score: ${computerScore}\n`);
+			
+			if (humanScore == 5 || computerScore == 5) {
+				if (humanScore == 5) {
+					resultsText.textContent = (`Results: You win by reaching a score of 5 first! The computer trailed at a score of ${computerScore}.`);
+				} else { // computer wins
+					resultsText.textContent = (`Results: The computer wins by reaching a score of 5 first! You trailed with a score of ${humanScore}.`);
+				}
+				endGame();
+			}
 }
 
-playGame();
+function handleChoices (event) {
+	const humanChoice = event.target.id;
+	const computerChoice = getComputerChoice();
+	if (gameActive) {
+		playRound(humanChoice, computerChoice);
+	} else {
+		resultsText.textContent = "Please press the restart button in order to begin a new game.";
+	}
+}
+
+function endGame() {
+	// game over, reset scores, announce winner
+	humanScore = 0;
+	computerScore = 0;
+
+	// remove event listeners
+	rock.removeEventListener('click', handleChoices);
+	paper.removeEventListener('click', handleChoices);
+	scissors.removeEventListener('click', handleChoices);
+	gameActive = false;
+}
+
+function restartGame() {
+	humanScore = 0;
+	computerScore = 0;
+	resultsText.textContent = "Game has been restarted. Please choose rock, paper or scissors to continue.";
+	rock.addEventListener('click', handleChoices);
+	paper.addEventListener('click', handleChoices);
+	scissors.addEventListener('click', handleChoices);
+	gameActive = true;
+}
+
+rock.addEventListener('click', handleChoices);
+paper.addEventListener('click', handleChoices);
+scissors.addEventListener('click', handleChoices);
+restart.addEventListener('click', restartGame);
+
+
